@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.team.zhuoke.R;
 import com.team.zhuoke.base.BaseActivity;
 import com.team.zhuoke.base.BaseView;
@@ -30,7 +31,6 @@ import com.team.zhuoke.presenter.common.interfaces.CommonPhoneLiveVideoContract;
 import com.team.zhuoke.ui.loadplay.LoadingView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.utils.ScreenResolution;
@@ -68,10 +68,13 @@ public class PhoneLiveVideoActivity extends BaseActivity<CommonPhoneLiveVideoMod
     TextView tvLoadingBuffer;
     @BindView(R.id.danmakuView)
     DanmakuView danmakuView;
+    @BindView(R.id.img_loading)
+    SimpleDraweeView imgLoading;
     private HomeRecommendHotCate.RoomListEntity mRoomEntity;
     private OldLiveVideoInfo videoInfo;
     private String Room_id;
     private SVProgressHUD svProgressHUD;
+    private String imgUrl;
 
     /**
      * 弹幕
@@ -136,6 +139,10 @@ public class PhoneLiveVideoActivity extends BaseActivity<CommonPhoneLiveVideoMod
     @Override
     protected void onInitView(Bundle bundle) {
         Room_id = getIntent().getExtras().getString("Room_id");
+        imgUrl = getIntent().getExtras().getString("Img_Path");
+        if (imgUrl != null) {
+            imgLoading.setImageURI(Uri.parse(imgUrl));
+        }
         // 保持 屏幕常亮
         vmVideoview.setKeepScreenOn(true);
         mPresenter.getPresenterPhoneLiveVideoInfo(Room_id);
@@ -386,6 +393,7 @@ public class PhoneLiveVideoActivity extends BaseActivity<CommonPhoneLiveVideoMod
             mDanmuProcess.start();
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -403,8 +411,9 @@ public class PhoneLiveVideoActivity extends BaseActivity<CommonPhoneLiveVideoMod
             //        释放资源
             vmVideoview.stopPlayback();
         }
-        mDanmuProcess.finish();
         danmakuView.release();
+        mDanmuProcess.finish();
+        danmakuView.clear();
         super.onDestroy();
     }
 
@@ -415,7 +424,6 @@ public class PhoneLiveVideoActivity extends BaseActivity<CommonPhoneLiveVideoMod
                 if (vmVideoview.isPlaying()) {
                     vmVideoview.pause();
                 }
-
                 mHandler.removeMessages(HIDE_CONTROL_BAR);
                 break;
 //            完成缓冲
@@ -438,12 +446,5 @@ public class PhoneLiveVideoActivity extends BaseActivity<CommonPhoneLiveVideoMod
             svProgressHUD.showErrorWithStatus("主播还在赶来的路上~~");
         }
         return false;
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }

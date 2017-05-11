@@ -2,7 +2,6 @@ package com.team.zhuoke.danmu.msg;
 
 import android.text.TextUtils;
 
-import com.team.zhuoke.utils.L;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,6 @@ public class MsgView {
 
         this.messageList = parseRespond(data);
     }
-
     /**
      * 获取弹幕信息对象
      *

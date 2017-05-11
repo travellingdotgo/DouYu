@@ -250,7 +250,6 @@ public class OtherHomeFragment extends BaseFragment<HomeCateModelLogic, HomeCate
         homeNgBarViewPagerAdapter = new HomeNgBarViewPagerAdapter(mViewPageList);
         ngbarViewpager.setAdapter(homeNgBarViewPagerAdapter);
         homeNgBarViewPagerAdapter.notifyDataSetChanged();
-
         /**
          *  处理小圆点 指示器
          */

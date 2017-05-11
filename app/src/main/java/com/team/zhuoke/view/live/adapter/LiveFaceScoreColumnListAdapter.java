@@ -14,11 +14,9 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.team.zhuoke.R;
-import com.team.zhuoke.model.logic.home.bean.HomeFaceScoreColumn;
 import com.team.zhuoke.model.logic.live.bean.LiveOtherList;
 import com.team.zhuoke.ui.refreshview.recyclerview.BaseRecyclerAdapter;
 import com.team.zhuoke.utils.CalculationUtils;
-import com.team.zhuoke.view.common.activity.PcLiveVideoActivity;
 import com.team.zhuoke.view.common.activity.PhoneLiveVideoActivity;
 
 import java.util.ArrayList;
@@ -79,6 +77,7 @@ public class LiveFaceScoreColumnListAdapter extends BaseRecyclerAdapter<Recycler
                 Intent intent = new Intent(context, PhoneLiveVideoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("Room_id",mFaceScoreColumn.get(position).getRoom_id());
+                bundle.putString("Img_Path", mFaceScoreColumn.get(position).getVertical_src());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

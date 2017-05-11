@@ -15,7 +15,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.team.zhuoke.R;
 import com.team.zhuoke.model.logic.home.bean.HomeColumnMoreAllList;
-import com.team.zhuoke.model.logic.live.bean.LiveAllList;
 import com.team.zhuoke.ui.refreshview.recyclerview.BaseRecyclerAdapter;
 import com.team.zhuoke.utils.CalculationUtils;
 import com.team.zhuoke.view.common.activity.PcLiveVideoActivity;
@@ -94,6 +93,7 @@ public class HomeColumnMoreAllListAdapter extends BaseRecyclerAdapter<RecyclerVi
                     Intent intent = new Intent(context, PhoneLiveVideoActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("Room_id", mLiveList.get(position).getRoom_id());
+                    bundle.putString("Img_Path", mLiveList.get(position).getVertical_src());
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 } else if (mLiveList.get(position).getCate_id() == 207) {

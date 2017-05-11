@@ -16,7 +16,6 @@ import com.team.zhuoke.R;
 import com.team.zhuoke.model.logic.home.bean.HomeFaceScoreColumn;
 import com.team.zhuoke.ui.refreshview.recyclerview.BaseRecyclerAdapter;
 import com.team.zhuoke.utils.CalculationUtils;
-import com.team.zhuoke.view.common.activity.PcLiveVideoActivity;
 import com.team.zhuoke.view.common.activity.PhoneLiveVideoActivity;
 
 import java.util.ArrayList;
@@ -81,6 +80,7 @@ public class HomeRecommendFaceScoreColumnAdapter extends BaseRecyclerAdapter<Rec
                 Intent intent = new Intent(context, PhoneLiveVideoActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("Room_id", mHomeFaceScoreColumn.get(position).getRoom_id());
+                bundle.putString("Img_Path", mHomeFaceScoreColumn.get(position).getVertical_src());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

@@ -41,7 +41,6 @@ public class CommonPcLiveVideoPresenterImp extends CommonPcLiveVideoContract.Pre
             }
             @Override
             public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-
                 String json =response.body().string().toString();
                 Log.e("onResponse",json);
                 try {
