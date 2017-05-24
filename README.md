@@ -133,12 +133,10 @@
 
    下载方式
    ---
-   * 1.扫码二维码
- 
-  ![app下载](https://github.com/mykj/DouYu/blob/master/upload_image/536FAFE7-C0BA-4E28-8875-D6BB134880A3.png)
+
        
        
-  * 2.下载地址:[点击这里](https://www.pgyer.com/DouYuTv)
+  * 1.下载地址:[点击这里](https://fir.im/DouYu)
      
    ---
   
