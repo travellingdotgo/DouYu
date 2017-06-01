@@ -1,4 +1,4 @@
-package com.team.zhuoke.view.common.activity;
+package com.team.zhuoke.view.video.activity;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -22,12 +22,12 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.team.zhuoke.R;
 import com.team.zhuoke.base.BaseActivity;
 import com.team.zhuoke.base.BaseView;
-import com.team.zhuoke.danmu.utils.DanmuProcess;
-import com.team.zhuoke.model.logic.common.CommonPcLiveVideoModelLogic;
 import com.team.zhuoke.model.logic.common.bean.OldLiveVideoInfo;
 import com.team.zhuoke.model.logic.home.bean.HomeRecommendHotCate;
-import com.team.zhuoke.presenter.common.impl.CommonPcLiveVideoPresenterImp;
-import com.team.zhuoke.presenter.common.interfaces.CommonPcLiveVideoContract;
+import com.team.zhuoke.model.logic.video.VideoLiveVideoInfoModelLogic;
+import com.team.zhuoke.model.logic.video.bean.VideoStramInfo;
+import com.team.zhuoke.presenter.video.impl.VideoPhoneVideoInfoPresenterImp;
+import com.team.zhuoke.presenter.video.interfaces.VideoPhoneVideoInfoContract;
 import com.team.zhuoke.ui.loadplay.LoadingView;
 
 import butterknife.BindView;
@@ -37,7 +37,6 @@ import io.vov.vitamio.MediaPlayer;
 import io.vov.vitamio.Vitamio;
 import io.vov.vitamio.utils.ScreenResolution;
 import io.vov.vitamio.widget.VideoView;
-import master.flame.danmaku.ui.widget.DanmakuView;
 
 import static com.team.zhuoke.R.id.iv_control_img;
 
@@ -50,15 +49,13 @@ import static com.team.zhuoke.R.id.iv_control_img;
  * 备注消息：
  * 修改时间：2017/2/10 上午11:16
  **/
-public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogic, CommonPcLiveVideoPresenterImp> implements CommonPcLiveVideoContract.View, MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener,
+public class VideoPcVideoInfoActivity extends BaseActivity<VideoLiveVideoInfoModelLogic, VideoPhoneVideoInfoPresenterImp> implements VideoPhoneVideoInfoContract.View, MediaPlayer.OnInfoListener, MediaPlayer.OnBufferingUpdateListener,
         MediaPlayer.OnErrorListener {
 
     @BindView(R.id.vm_videoview)
     VideoView vmVideoview;
     @BindView(R.id.fl_loading)
     FrameLayout flLoading;
-    @BindView(R.id.danmakuView)
-    DanmakuView danmakuView;
     @BindView(R.id.iv_back)
     ImageView ivBack;
     @BindView(R.id.tv_live_nickname)
@@ -120,10 +117,6 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
     public static final int HIDE_TIME = 5000;//隐藏控制条时间
     public static final int SHOW_CENTER_CONTROL = 0x03;//显示中间控制
     public static final int SHOW_CONTROL_TIME = 1000;
-    /**
-     * 弹幕
-     */
-    private DanmuProcess mDanmuProcess;
     //    弹幕控制开关 默认打开状态
     private boolean mDanmuControlFalg = true;
 
@@ -186,20 +179,14 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
     protected void onInitView(Bundle bundle) {
         Room_id = getIntent().getExtras().getString("Room_id");
         vmVideoview.setKeepScreenOn(true);
-        mPresenter.getPresenterPcLiveVideoInfo(Room_id);
+        mPresenter.getPresenterPhoneLiveVideoInfo(Room_id);
         svProgressHUD = new SVProgressHUD(this);
         //获取屏幕宽度
         Pair<Integer, Integer> screenPair = ScreenResolution.getResolution(this);
         mScreenWidth = screenPair.first;
-        initDanMu(Room_id);
         initVolumeWithLight();
         addTouchListener();
         vmVideoview.setVideoLayout(VideoView.VIDEO_LAYOUT_STRETCH, 0);
-    }
-
-    private void initDanMu(String room_id) {
-        mDanmuProcess = new DanmuProcess(this, danmakuView, Integer.valueOf(room_id));
-        mDanmuProcess.start();
     }
 
     @Override
@@ -215,14 +202,13 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
     }
 
     @Override
-    public void getViewPcLiveVideoInfo(OldLiveVideoInfo mLiveVideoInfo) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                videoInfo = mLiveVideoInfo;
-                getViewInfo(mLiveVideoInfo);
-            }
-        });
+    public void getViewPhoneLiveVideoInfo(VideoStramInfo mLiveVideoInfo) {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                getViewInfo(mLiveVideoInfo);
+//            }
+//        });
     }
 
     /**
@@ -349,13 +335,13 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
      *
      * @param mLiveVideoInfo
      */
-    private void getViewInfo(OldLiveVideoInfo mLiveVideoInfo) {
-        String url = mLiveVideoInfo.getData().getLive_url();
+    private void getViewInfo(VideoStramInfo mLiveVideoInfo) {
+        String url = mLiveVideoInfo.getThumb_video().getNormal();
 //        String url="http://c.brightcove.com/services/mobile/streaming/index/rendition.m3u8?assetId=5330721253001&pubId=4938530621001&videoId=5330694577001";
         Uri uri = Uri.parse(url);
-        if (tvLiveNickname != null) {
-            tvLiveNickname.setText(mLiveVideoInfo.getData().getRoom_name());
-        }
+//        if(tvLiveNickname!=null) {
+//            tvLiveNickname.setText(mLiveVideoInfo.getThumb_video().g());
+//        }
 
         if (vmVideoview != null) {
             vmVideoview.setVideoURI(uri);
@@ -431,15 +417,12 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
     @Override
     protected void onRestart() {
         super.onRestart();
-        mPresenter.getPresenterPcLiveVideoInfo(Room_id);
+        mPresenter.getPresenterPhoneLiveVideoInfo(Room_id);
         if (vmVideoview != null) {
             vmVideoview.start();
 
         }
-        if (danmakuView != null && mDanmuProcess != null) {
-            danmakuView.restart();
-            mDanmuProcess.start();
-        }
+
     }
 
     @Override
@@ -448,9 +431,7 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
         if (vmVideoview != null) {
             vmVideoview.pause();
         }
-        if (danmakuView != null) {
-            danmakuView.pause();
-        }
+
     }
 
     @Override
@@ -459,9 +440,6 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
             //        释放资源
             vmVideoview.stopPlayback();
         }
-        danmakuView.release();
-        mDanmuProcess.finish();
-        danmakuView.clear();
         super.onDestroy();
     }
 
@@ -543,12 +521,11 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
              *  隐藏弹幕
              *
              */
-            danmakuView.hide();
+
             imDanmuControl.setImageResource(R.drawable.pad_play_closedanmu);
             mDanmuControlFalg = false;
         } else {
 //          开启弹幕
-            danmakuView.show();
             imDanmuControl.setImageResource(R.drawable.pad_play_opendanmu);
             mDanmuControlFalg = true;
         }
@@ -559,7 +536,7 @@ public class PcLiveVideoActivity extends BaseActivity<CommonPcLiveVideoModelLogi
      */
     @OnClick(R.id.iv_live_refresh)
     public void ivLiveRefresh() {
-        mPresenter.getPresenterPcLiveVideoInfo(Room_id);
+        mPresenter.getPresenterPhoneLiveVideoInfo(Room_id);
     }
 
     @Override

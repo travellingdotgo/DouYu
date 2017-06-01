@@ -2,6 +2,7 @@ package com.team.zhuoke.view.video.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,13 +16,10 @@ import com.team.zhuoke.R;
 import com.team.zhuoke.model.logic.video.bean.VideoHotAuthorColumn;
 import com.team.zhuoke.ui.refreshview.recyclerview.BaseRecyclerAdapter;
 import com.team.zhuoke.utils.CalculationUtils;
+import com.team.zhuoke.view.live.activity.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.team.zhuoke.R.id.img_item_gridview;
-import static com.team.zhuoke.R.id.tv_facescore_city;
-import static com.team.zhuoke.R.id.tv_nickname;
 
 /**
  * 作者：gaoyin
@@ -73,6 +71,7 @@ public class VideoHotAuthorColumnAdapter extends BaseRecyclerAdapter<RecyclerVie
         holder.tv_nickname.setText(mVideoHotAuthorColumn.get(position).getNickname());
         holder.tv_sub_num.setText(mVideoHotAuthorColumn.get(position).getFollow_num());
         holder.tv_video_num.setText(CalculationUtils.getOnLine(mVideoHotAuthorColumn.get(position).getSubmit_num()));
+
     }
 
     @Override

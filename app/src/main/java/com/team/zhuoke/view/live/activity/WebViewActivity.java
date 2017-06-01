@@ -1,26 +1,21 @@
 package com.team.zhuoke.view.live.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.team.zhuoke.R;
-import com.team.zhuoke.base.BaseActivity;
 import com.team.zhuoke.base.BaseView;
 import com.team.zhuoke.base.SwipeBackActivity;
-import com.team.zhuoke.utils.Utils;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -173,10 +168,10 @@ public class WebViewActivity extends SwipeBackActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (mWebView.canGoBack()) {
-            mWebView.goBack();
-            return true;
-        }
+//        if (mWebView.canGoBack()) {
+//            mWebView.goBack();
+//            return true;
+//        }
         return super.onKeyDown(keyCode, event);
     }
 }

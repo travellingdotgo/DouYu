@@ -1,6 +1,7 @@
 package com.team.zhuoke.view.video.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,22 +12,22 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.team.zhuoke.R;
-import com.team.zhuoke.model.logic.live.bean.LiveOtherList;
 import com.team.zhuoke.model.logic.video.bean.VideoOtherColumnList;
 import com.team.zhuoke.ui.refreshview.recyclerview.BaseRecyclerAdapter;
 import com.team.zhuoke.utils.CalculationUtils;
+import com.team.zhuoke.view.live.activity.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *  作者：gaoyin
- *  电话：18810474975
- *  邮箱：18810474975@163.com
- *  版本号：1.0
- *  类描述：
- *  备注消息：
- *  修改时间：2017/2/7 下午6:17
+ * 作者：gaoyin
+ * 电话：18810474975
+ * 邮箱：18810474975@163.com
+ * 版本号：1.0
+ * 类描述：
+ * 备注消息：
+ * 修改时间：2017/2/7 下午6:17
  **/
 public class VideoOtherColumnListAdapter extends BaseRecyclerAdapter<RecyclerView.ViewHolder> {
 
@@ -71,12 +72,21 @@ public class VideoOtherColumnListAdapter extends BaseRecyclerAdapter<RecyclerVie
         holder.tv_column_item_nickname.setText(mLiveList.get(position).getVideo_title());
         holder.tv_nickname.setText(mLiveList.get(position).getNickname());
         holder.tv_online_num.setText(CalculationUtils.getOnLine(Integer.parseInt(mLiveList.get(position).getView_num())));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, WebViewActivity.class);
+                intent.putExtra("web_url", "https://v.douyu.com/show/" + mLiveList.get(position).getHash_id());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getAdapterItemCount() {
         return this.mLiveList.size();
     }
+
     public class LiveOtherColumnListHolder extends BaseViewHolder {
         //        图片
         public SimpleDraweeView img_item_gridview;

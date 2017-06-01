@@ -21,6 +21,7 @@ import com.team.zhuoke.model.logic.home.bean.HomeRecommendHotCate;
 import com.team.zhuoke.presenter.home.impl.HomeCatePresenterImp;
 import com.team.zhuoke.presenter.home.interfaces.HomeCateContract;
 import com.team.zhuoke.ui.refreshview.XRefreshView;
+import com.team.zhuoke.utils.L;
 import com.team.zhuoke.view.home.adapter.HomeNgBarAdapter;
 import com.team.zhuoke.view.home.adapter.HomeNgBarViewPagerAdapter;
 import com.team.zhuoke.view.home.adapter.HomeOtherAdapter;
@@ -229,15 +230,17 @@ public class OtherHomeFragment extends BaseFragment<HomeCateModelLogic, HomeCate
         ngbarViewpager.addOnPageChangeListener(mOtherHomeFraments.get(arguments.getInt("position")));
         mPoints = (ViewGroup) haderView.findViewById(R.id.points);
         LayoutInflater inflater = LayoutInflater.from(getActivity());
+        //        移除最热栏目
+        homeCates.remove(0);
 //        显示总的页数  Math.ceil 先上取整
         mTotalPage = (int) Math.ceil(homeCates.size() * 1.0 / mPageSize);
+        L.e("总共" + mTotalPage + "页");
         mViewPageList = new ArrayList<>();
-//        移除最热栏目
-        homeCates.remove(0);
+
         /**
          *  创建 多个GredView
          */
-        for (int i = 0; i < mTotalPage; i++) {
+        for (int i = 0; i <mTotalPage; i++) {
             if (i <= 1) {
                 GridView gridView = (GridView) inflater.inflate(R.layout.view_layout_gridview, null);
                 homeNgBarAdapter = new HomeNgBarAdapter(getContext(), homeCates, i, mPageSize);
