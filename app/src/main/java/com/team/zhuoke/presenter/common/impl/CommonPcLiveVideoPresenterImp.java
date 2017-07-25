@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.team.zhuoke.model.logic.common.bean.OldLiveVideoInfo;
+import com.team.zhuoke.model.logic.common.bean.TempLiveVideoInfo;
 import com.team.zhuoke.presenter.common.interfaces.CommonPcLiveVideoContract;
 import com.team.zhuoke.utils.L;
 
@@ -47,7 +48,7 @@ public class CommonPcLiveVideoPresenterImp extends CommonPcLiveVideoContract.Pre
                     JSONObject jsonObject = new JSONObject(json);
                     if (jsonObject.getInt("error")==0) {
                         Gson gson = new Gson();
-                        OldLiveVideoInfo mLiveVideoInfo = gson.fromJson(json, OldLiveVideoInfo.class);
+                        TempLiveVideoInfo mLiveVideoInfo = gson.fromJson(json, TempLiveVideoInfo.class);
                         mView.getViewPcLiveVideoInfo(mLiveVideoInfo);
                     } else {
                         mView.showErrorWithStatus("获取数据失败!");

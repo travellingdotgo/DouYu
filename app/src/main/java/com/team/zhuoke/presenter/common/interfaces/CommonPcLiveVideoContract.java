@@ -6,7 +6,7 @@ import android.content.Context;
 import com.team.zhuoke.base.BaseModel;
 import com.team.zhuoke.base.BasePresenter;
 import com.team.zhuoke.base.BaseView;
-import com.team.zhuoke.model.logic.common.bean.OldLiveVideoInfo;
+import com.team.zhuoke.model.logic.common.bean.TempLiveVideoInfo;
 
 import okhttp3.Request;
 
@@ -22,7 +22,7 @@ import okhttp3.Request;
 public interface CommonPcLiveVideoContract {
 
       interface View extends BaseView {
-           void getViewPcLiveVideoInfo(OldLiveVideoInfo mLiveVideoInfo);
+           void getViewPcLiveVideoInfo(TempLiveVideoInfo mLiveVideoInfo);
       }
     interface  Model extends BaseModel{
         Request getModelPcLiveVideoInfo(Context context, String room_id);

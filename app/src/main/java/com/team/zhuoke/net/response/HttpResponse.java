@@ -1,7 +1,5 @@
 package com.team.zhuoke.net.response;
 
-import static android.R.id.message;
-
 /**
  *  作者：gaoyin
  *  电话：18810474975
@@ -12,7 +10,6 @@ import static android.R.id.message;
  *  修改时间：2016/11/23 下午5:52
  **/
 public class HttpResponse<T> {
-
 
      private int error ;
 
